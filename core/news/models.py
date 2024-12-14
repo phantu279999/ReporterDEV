@@ -26,6 +26,9 @@ class Zone(models.Model):
 	url = models.SlugField()
 	parent_id = models.IntegerField(blank=True)
 
+	def __str__(self):
+		return self.name
+
 
 class Tag(TimeStampedModel):
 	name = models.CharField(max_length=255, db_index=True)
@@ -33,6 +36,9 @@ class Tag(TimeStampedModel):
 	meta_keyword = models.CharField(max_length=255, blank=True)
 	meta_description = models.CharField(max_length=255, blank=True)
 	url = models.SlugField()
+
+	def __str__(self):
+		return self.name
 
 
 class News(TimeStampedModel):

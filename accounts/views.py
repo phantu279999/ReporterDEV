@@ -7,6 +7,15 @@ from . import models
 from .utils import validate_password
 
 
+@login_required
+def author_profile_view(request):
+	try:
+		profile = models.AuthorProfile.objects.get(user=request.user)
+	except models.AuthorProfile.DoesNotExist:
+		profile = None
+	return render(request, 'accounts/profile.html', {'profile': profile})
+
+
 def login_view(request):
 	if request.method == 'POST':
 		email = request.POST['email']
@@ -38,7 +47,6 @@ def register_view(request):
 		user = models.CustomUser.objects.create_user(email=email, password=password)
 		user.save()
 
-		login(request, user)
 		return redirect('home')
 
 	return render(request, 'accounts/register.html')

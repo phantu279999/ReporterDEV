@@ -6,21 +6,30 @@
 
 
 {% block content %}
-    <h1>Login</h1>
+    <div class="container">
+        <h1>Login</h1>
 
-        <!-- Hiển thị thông báo lỗi -->
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-danger">
-                {{ message }}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email"
+                       required>
             </div>
-        {% endfor %}
-    {% endif %}
-
-    <form method="post">
-        {% csrf_token %}
-        <input type="email" name="email">
-        <input type="password" name="password">
-        <button class="btn btn-primary">Login</button>
-    </form>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-control"
+                       placeholder="Create a password" required>
+            </div>
+            <button class="btn btn-primary">Login</button>
+        </form>
+    </div>
 {% endblock %}

@@ -30,6 +30,7 @@ INSTALLED_APPS = [
 	# app
 	'core.apps.CoreConfig',
 	'accounts.apps.AccountsConfig',
+	'ckeditor'
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
@@ -93,6 +94,11 @@ AUTH_PASSWORD_VALIDATORS = [
 		'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
 	},
 ]
+
+# AUTHENTICATION_BACKENDS = [
+#     'accounts.auth.CustomUserBackend',
+#     'django.contrib.auth.backends.ModelBackend',  # Fallback backend
+# ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
