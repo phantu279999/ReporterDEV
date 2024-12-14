@@ -1,0 +1,72 @@
+from django.db import models
+from ckeditor.fields import RichTextField
+
+from accounts.models import Author
+
+NEWS_TYPE = (
+	('normal', 'Normal'),
+	('video', 'Video'),
+	('image', 'Image'),
+)
+
+
+class TimeStampedModel(models.Model):
+	created_date = models.DateTimeField(auto_now_add=True)
+	modified_date = models.DateTimeField(auto_now=True)
+
+	class Meta:
+		abstract = True
+
+
+class Zone(models.Model):
+	name = models.CharField(max_length=255, db_index=True)
+	meta_name = models.CharField(max_length=255, blank=True)
+	meta_keyword = models.CharField(max_length=255, blank=True)
+	meta_description = models.CharField(max_length=255, blank=True)
+	url = models.SlugField()
+	parent_id = models.IntegerField(blank=True)
+
+
+class Tag(TimeStampedModel):
+	name = models.CharField(max_length=255, db_index=True)
+	meta_name = models.CharField(max_length=255, blank=True)
+	meta_keyword = models.CharField(max_length=255, blank=True)
+	meta_description = models.CharField(max_length=255, blank=True)
+	url = models.SlugField()
+
+
+class News(TimeStampedModel):
+	title = models.CharField(max_length=255, db_index=True)
+	sapo = models.CharField(max_length=255)
+	avatar = models.ImageField(upload_to='avatar', blank=True)
+	news_type = models.CharField(max_length=100, choices=NEWS_TYPE)
+	status = models.BooleanField(default=True)
+	slug = models.SlugField(unique=True)
+	content = RichTextField(blank=True)
+
+	created_by = models.CharField(max_length=200, blank=True)
+	edited_by = models.CharField(max_length=200, blank=True)
+
+	is_on_home = models.BooleanField(default=False)
+	is_focus = models.BooleanField(default=False)
+	is_pr = models.BooleanField(default=False)
+
+	author = models.ForeignKey(Author, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.title
+
+	def word_count(self):
+		return 0
+
+
+class NewsInZone(models.Model):
+	zone = models.ForeignKey(Zone, on_delete=models.CASCADE)
+	news = models.ForeignKey(News, on_delete=models.CASCADE)
+
+
+class TagNews(models.Model):
+	tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+	news = models.ForeignKey(News, on_delete=models.CASCADE)
+
+
