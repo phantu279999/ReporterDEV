@@ -1,13 +1,33 @@
 {% extends 'news/base_news.html' %}
+{% load static %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/list_news.css' %}"/>
+{% endblock %}
 
 {% block title %}
     List News
 {% endblock %}
 
 {% block content %}
-    {% for new in news %}
-        <p>{{ new.title }}</p>
-    {% endfor %}
-
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for new in news %}
+            <div class="col">
+                <div class="card">
+                    <a href="{% url 'news:detail_news' slug=new.slug %}">
+                        {% if new.avatar %}
+                            <img src="/media/{{ new.avatar }}" class="card-img-top card-img-custom"
+                                 alt="{{ new.slug }}">
+                        {% else %}
+                            <img src="/media/example.jpg" class="card-img-top card-img-custom" alt="{{ new.slug }}">
+                        {% endif %}
+                    </a>
+                    <div class="card-body">
+                        <a href="{% url 'news:detail_news' slug=new.slug %}"><h5 class="card-title">{{ new.title }}</h5>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

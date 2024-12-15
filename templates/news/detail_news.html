@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'news/base_news.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block stylesheets %}
+    {{ block.super }}
+{% endblock %}
+
+{% block title %}
+    {{ new.title }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ new.title }}</h1>
+    <p>{{ new.sapo }}</p>
+    <hr>
+    <div class="content-news">
+        {{ new.content|safe }}
+    </div>
+{% endblock %}

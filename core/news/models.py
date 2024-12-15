@@ -65,6 +65,9 @@ class News(TimeStampedModel):
 	def word_count(self):
 		return 0
 
+	class Meta:
+		ordering = ('-created_date',)
+
 
 class NewsInZone(models.Model):
 	zone = models.ForeignKey(Zone, on_delete=models.CASCADE)

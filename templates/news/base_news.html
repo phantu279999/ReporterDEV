@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/news.css' %}"/>
+{% endblock %}
 
 {% block title %}
 
@@ -10,7 +14,7 @@
         <div class="container-fluid">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Latest News</a>
+                    <a class="nav-link" href="{% url 'news:list_news' %}">List News</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Categories</a>

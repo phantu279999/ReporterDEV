@@ -1,0 +1,15 @@
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.card {
+    border: none;
+}
+
+.card-img-custom {
+    width: 100%; /* Ensure the image spans the full width of the card */
+    height: 200px; /* Set a fixed height */
+    object-fit: cover; /* Ensures the image covers the space without distortion */
+    border-radius: 4px; /* Optional: Gives the images slightly rounded corners */
+}
