@@ -4,8 +4,10 @@ from .models import News, Zone, NewsInZone
 
 
 def news_in_zone(request, url):
-	zone = Zone.objects.get(url=url)
-	news = [item.news for item in NewsInZone.objects.filter(zone__url=url).select_related('news')]
+	news_zone = NewsInZone.objects.filter(zone__url=url)
+	zone = news_zone.select_related('zone')[0].zone
+	news = [item.news for item in news_zone.select_related('news')]
+	# news = News.objects.filter(newsinzone__zone__url=url).distinct()
 	return render(request, 'news/news_in_zone.html', {'zone': zone, 'news': news})
 
 
