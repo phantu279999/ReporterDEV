@@ -1,0 +1,13 @@
+{% extends 'news/base_news.html' %}
+
+
+{% block title %}
+    List News
+{% endblock %}
+
+{% block content %}
+    {% for new in news %}
+        <p>{{ new.title }}</p>
+    {% endfor %}
+
+{% endblock %}
