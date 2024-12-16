@@ -19,3 +19,13 @@ a {
     object-fit: cover; /* Ensures the image covers the space without distortion */
     border-radius: 4px; /* Optional: Gives the images slightly rounded corners */
 }
+
+.tags * {
+    display: inline-block;
+}
+
+.tag-news {
+    background-color: lightgray;
+    font-size: 12px;
+    margin: 7px 7px 0 0;
+}

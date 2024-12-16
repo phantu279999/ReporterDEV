@@ -73,9 +73,13 @@ class NewsInZone(models.Model):
 	zone = models.ForeignKey(Zone, on_delete=models.CASCADE)
 	news = models.ForeignKey(News, on_delete=models.CASCADE)
 
+	def __str__(self):
+		return "{}->{}".format(self.news.title, self.zone.name)
+
 
 class TagNews(models.Model):
 	tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
 	news = models.ForeignKey(News, on_delete=models.CASCADE)
 
-
+	def __str__(self):
+		return "{}->{}".format(self.news.title, self.tag.name)

@@ -16,4 +16,11 @@
     <div class="content-news">
         {{ new.content|safe }}
     </div>
+    <hr>
+    <b>Tags:</b>
+    <div class="tags">
+        {% for tag in tagnews %}
+        <h3 class="tag-news"><a href="{% url 'news:news_in_tag' url=tag.url %}">{{ tag }}</a></h3>
+    {% endfor %}
+    </div>
 {% endblock %}
