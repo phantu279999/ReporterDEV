@@ -10,4 +10,10 @@
     <p>{{ profile.bio }}</p>
     <p>Phone: {{ profile.phone }}</p>
     <p>Address: {{ profile.address }}</p>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal">
+        Edit Profile
+    </button>
+
+    {% include 'accounts/edit_profile_modal.html' %}
 {% endblock %}

@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.views import login_required
 from django.contrib.auth import login, logout, authenticate
 
-from . import models
+from . import models, forms
 from .utils import validate_password
 
 
@@ -12,8 +12,16 @@ def author_profile_view(request):
 	try:
 		profile = models.AuthorProfile.objects.get(user=request.user)
 	except models.AuthorProfile.DoesNotExist:
-		profile = None
-	return render(request, 'accounts/profile.html', {'profile': profile})
+		models.AuthorProfile.objects.create(user=request.user).save()
+		profile = models.AuthorProfile.objects.get(user=request.user)
+
+	if request.method == 'POST':
+		form = forms.AuthorProfileForm(request.POST, instance=profile)
+		if form.is_valid():
+			form.save()
+	else:
+		form = forms.AuthorProfileForm()
+	return render(request, 'accounts/profile.html', {'profile': profile, 'form': form})
 
 
 def login_view(request):
