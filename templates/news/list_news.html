@@ -1,6 +1,17 @@
 {% extends 'news/base_news.html' %}
 {% load static %}
 
+{% block seo %}
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Danh sách tin tức ngày trong giới lập trình"/>
+    <meta property="og:description" content="Tin tức, lập trình, tự học, cộng đồng lập trình"/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content="https://reportdev.com.vn{{ request.path }}"/>
+    <meta property="og:site_name" content="ReporterDEV"/>
+{% endblock %}
+
 {% block stylesheets %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'css/list_news.css' %}"/>

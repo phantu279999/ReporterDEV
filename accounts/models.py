@@ -83,12 +83,19 @@ class Reader(CustomUser):
 
 class AuthorProfile(models.Model):
 	user = models.OneToOneField(Author, on_delete=models.CASCADE)
+	full_name = models.CharField(max_length=50, blank=True)
+	avatar = models.ImageField(upload_to='avatar_user', blank=True)
 	bio = models.CharField(max_length=255, blank=True)
 	phone = models.CharField(max_length=11, blank=True)
 	address = models.CharField(max_length=50, blank=True)
 
+	link_facebook = models.CharField(max_length=100, blank=True)
+	link_x = models.CharField(max_length=100, blank=True)
+	link_other = models.CharField(max_length=100, blank=True)
+
 	def __str__(self):
 		return self.user.email
+
 
 @receiver(post_save, sender=Author)
 def create_author_profile(sender, instance, created, **kwargs):
