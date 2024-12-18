@@ -12,24 +12,29 @@
 {% block content %}
     <h1>Tag: {{ tag.name }}</h1>
     <hr>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-        {% for new in news %}
-            <div class="col">
-                <div class="card">
+    {% for new in news %}
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4">
                     <a href="{% url 'news:detail_news' slug=new.slug %}">
                         {% if new.avatar %}
-                            <img src="/media/{{ new.avatar }}" class="card-img-top card-img-custom"
+                            <img src="/media/{{ new.avatar }}" class="img-fluid rounded-start card-img-custom"
                                  alt="{{ new.slug }}">
                         {% else %}
-                            <img src="/media/example.jpg" class="card-img-top card-img-custom" alt="{{ new.slug }}">
+                            <img src="/media/example.jpg" class="img-fluid rounded-start card-img-custom"
+                                 alt="{{ new.slug }}">
                         {% endif %}
                     </a>
+                </div>
+                <div class="col-md-8">
                     <div class="card-body">
                         <a href="{% url 'news:detail_news' slug=new.slug %}"><h5 class="card-title">{{ new.title }}</h5>
                         </a>
+                        <p class="card-text">{{ new.sapo }}</p>
+                        <p class="card-text"><small class="text-muted">{{ new.created_date|date:"G:i d-m-Y" }}</small></p>
                     </div>
                 </div>
             </div>
-        {% endfor %}
-    </div>
+        </div>
+    {% endfor %}
 {% endblock %}
