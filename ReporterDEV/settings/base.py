@@ -39,10 +39,12 @@ INSTALLED_APPS = [
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
 
+	# 3rd party
+	'ckeditor',
+
 	# app
 	'core.apps.CoreConfig',
 	'accounts.apps.AccountsConfig',
-	'ckeditor'
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'

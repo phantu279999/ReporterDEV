@@ -2,21 +2,13 @@ from django.db import models
 from ckeditor.fields import RichTextField
 
 from accounts.models import Author
+from core.models import TimeStampedModel
 
 NEWS_TYPE = (
 	('normal', 'Normal'),
 	('video', 'Video'),
 	('image', 'Image'),
 )
-
-
-class TimeStampedModel(models.Model):
-	created_date = models.DateTimeField(auto_now_add=True)
-	modified_date = models.DateTimeField(auto_now=True)
-
-	class Meta:
-		abstract = True
-
 
 class Zone(models.Model):
 	name = models.CharField(max_length=255, db_index=True)
