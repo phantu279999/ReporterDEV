@@ -4,6 +4,8 @@ from ckeditor.fields import RichTextField
 from accounts.models import Author
 from core.models import TimeStampedModel
 
+from common.common import count_word, reading_time
+
 
 class Category(models.Model):
 	name = models.CharField(max_length=255, db_index=True)
@@ -36,7 +38,10 @@ class Blog(TimeStampedModel):
 		return self.title
 
 	def word_count(self):
-		return 0
+		return count_word(self.content)
+
+	def reading_time(self):
+		return reading_time(self.word_count())
 
 	class Meta:
 		ordering = ('-created_date',)

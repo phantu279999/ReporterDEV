@@ -11,8 +11,16 @@
 
 {% block content %}
     <h1>{{ new.title }}</h1>
-    <p>{{ new.sapo }}</p>
+        <div class="row">
+        <div class="col">
+            <p>{{ new.author.email }} | {{ new.created_date }}</p>
+        </div>
+        <div class="col">
+            <p style="text-align: right">{{ new.word_count }} Words({{ new.reading_time }} Minutes)</p>
+        </div>
+    </div>
     <hr>
+    <p><b>{{ new.sapo }}</b></p>
     <div class="content-news">
         {{ new.content|safe }}
     </div>
@@ -20,7 +28,7 @@
     <b>Tags:</b>
     <div class="tags">
         {% for tag in tagnews %}
-        <h3 class="tag-news"><a href="{% url 'news:news_in_tag' url=tag.url %}">{{ tag }}</a></h3>
-    {% endfor %}
+            <h3 class="tag-news"><a href="{% url 'news:news_in_tag' url=tag.url %}">{{ tag }}</a></h3>
+        {% endfor %}
     </div>
 {% endblock %}

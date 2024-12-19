@@ -1,12 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    {% for blog in blogs %}
-        <p>{{ blog.title }}</p>
-    {% endfor %}
-</body>
-</html>
+{% extends 'blogs/base_blog.html' %}
+
+{% block stylesheets %}
+    {{ block.super }}
+{% endblock %}
+
+{% block title %}
+    Blog Dev
+{% endblock %}
+
+{% block content %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for blog in blogs %}
+            <div class="col">
+                <div class="card">
+                    <a href="{% url 'blog:detail_blog' slug=blog.slug %}">
+                        {% if blog.avatar %}
+                            <img src="/media/{{ blog.avatar }}" class="card-img-top card-img-custom"
+                                 alt="{{ blog.slug }}">
+                        {% else %}
+                            <img src="/media/example.jpg" class="card-img-top card-img-custom" alt="{{ blog.slug }}">
+                        {% endif %}
+                    </a>
+                    <div class="card-body">
+                        <a href="{% url 'blog:detail_blog' slug=blog.slug %}"><h5
+                                class="card-title">{{ blog.title }}</h5>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
