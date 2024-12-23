@@ -11,19 +11,19 @@
 {% endblock %}
 
 {% block sub_navbar %}
-{#    {% if zones %}#}
-{#        <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="margin-bottom: 20px">#}
-{#            <div class="container-fluid">#}
-{#                <ul class="navbar-nav">#}
-{#                    {% for zone in cates %}#}
-{#                        <li class="nav-item">#}
-{#                            <a class="nav-link" href="{% url 'news:news_in_zone' url=zone.url %}">{{ zone.name }}</a>#}
-{#                        </li>#}
-{#                    {% endfor %}#}
-{#                </ul>#}
-{#            </div>#}
-{#        </nav>#}
-{#    {% endif %}#}
+    {% if categories %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="margin-bottom: 20px">
+            <div class="container-fluid">
+                <ul class="navbar-nav">
+                    {% for cate in categories %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">{{ cate.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </nav>
+    {% endif %}
 {% endblock %}
 {% block content %}
 
