@@ -38,16 +38,17 @@
         <section id="blogs" class="section">
             <h2>Featured Blogs</h2>
             <div class="grid">
+                {% for blog in blogs %}
                 <div class="card">
-                    <img src="/media/example.jpg" alt="Blog 1">
-                    <h3>Understanding Async Programming</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            {% if new.avatar %}
+                                <img src="/media/{{ blog.avatar }}" alt="{{ blog.slug }}">
+                            {% else %}
+                                <img src="/media/example.jpg" alt="{{ blog.slug }}">
+                            {% endif %}
+                    <h3>{{ blog.title }}</h3>
+                    <p>{{ blog.sapo|filter_sapo }}</p>
                 </div>
-                <div class="card">
-                    <img src="/media/example.jpg" alt="Blog 2">
-                    <h3>10 Tips for Debugging Like a Pro</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
+                {% endfor %}
             </div>
         </section>
     </div>

@@ -22,12 +22,19 @@ class NewsAdmin(admin.ModelAdmin):
 	inlines = [NewsInZoneInline, TagNewsInline]
 
 
+class BlogAdmin(admin.ModelAdmin):
+	prepopulated_fields = {'slug': ('title',)}
+	list_display = ('title', 'status')
+	search_fields = ('title',)
+	list_filter = ('status',)
+
+
 admin.site.register(Zone)
 admin.site.register(News, NewsAdmin)
 admin.site.register(Tag)
 admin.site.register(NewsInZone)
 admin.site.register(TagNews)
 
-admin.site.register(Blog)
+admin.site.register(Blog, BlogAdmin)
 admin.site.register(Category)
 admin.site.register(BlogInCate)

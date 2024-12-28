@@ -25,11 +25,14 @@ def list_news_view(request):
 
 def detail_news_view(request, slug):
 	new = News.objects.get(slug=slug)
-	tagnews = TagNews.objects.filter(news__slug=slug).select_related('tag')
-	tag_in_news = [item.tag for item in tagnews]
+	tagnews = TagNews.objects.filter(news_id=new.id)
+	# newsinzone = NewsInZone.objects.filter(zone__url=new.newsinzone_set.all().url)
+	news = [item.news for item in newsinzone.select_related('zone')]
+	tag_in_news = [item.tag for item in tagnews.select_related('tag')]
 	return render(request, 'news/detail_news.html', {
 		'new': new,
-		'tagnews': tag_in_news
+		'tagnews': tag_in_news,
+		# 'newsintag': news,
 	})
 
 
