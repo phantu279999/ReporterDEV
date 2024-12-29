@@ -29,7 +29,7 @@
             <hr>
             <b>Tags:</b>
             <div class="tags">
-                {% for tag in tagnews %}
+                {% for tag in tag_in_news %}
                     <h3 class="tag-news"><a href="{% url 'news:news_in_tag' url=tag.url %}">{{ tag }}</a></h3>
                 {% endfor %}
             </div>

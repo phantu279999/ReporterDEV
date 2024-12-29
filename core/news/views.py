@@ -35,7 +35,7 @@ def detail_news_view(request, slug):
 	tag_in_news = [item.tag for item in tagnews]
 	return render(request, 'news/detail_news.html', {
 		'new': new,
-		'tagnews': tag_in_news,
+		'tag_in_news': tag_in_news,
 		'news_in_zone': list(news_in_zone)
 	})
 
