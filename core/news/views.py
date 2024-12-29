@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_list_or_404
 
 from .models import News, Zone, NewsInZone, TagNews
 
@@ -25,14 +25,18 @@ def list_news_view(request):
 
 def detail_news_view(request, slug):
 	new = News.objects.get(slug=slug)
-	tagnews = TagNews.objects.filter(news_id=new.id)
-	# newsinzone = NewsInZone.objects.filter(zone__url=new.newsinzone_set.all().url)
-	news = [item.news for item in newsinzone.select_related('zone')]
-	tag_in_news = [item.tag for item in tagnews.select_related('tag')]
+	tagnews = TagNews.objects.filter(news_id=new.id).select_related('tag')
+	newsinzone = new.newsinzone_set.select_related('zone').prefetch_related('zone__newsinzone_set__news')
+	news_in_zone = set(
+		news_in_zone_item.news
+		for zone_news in newsinzone
+		for news_in_zone_item in zone_news.zone.newsinzone_set.all()
+	)
+	tag_in_news = [item.tag for item in tagnews]
 	return render(request, 'news/detail_news.html', {
 		'new': new,
 		'tagnews': tag_in_news,
-		# 'newsintag': news,
+		'news_in_zone': list(news_in_zone)
 	})
 
 

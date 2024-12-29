@@ -38,7 +38,7 @@
             <div style="border: 2px black solid; border-radius: 10px; padding: 10px">
                 <h2>News relation</h2>
                 <hr>
-                {% for new in newsintag %}
+                {% for new in news_in_zone %}
                     <a href="{% url 'news:detail_news' slug=new.slug %}">
                         <h3>{{ new.title }}</h3>
                     </a>
