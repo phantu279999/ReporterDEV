@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import UniqueConstraint
 from ckeditor.fields import RichTextField
 
 from accounts.models import Author
@@ -71,6 +72,11 @@ class NewsInZone(models.Model):
 	zone = models.ForeignKey(Zone, on_delete=models.CASCADE)
 	news = models.ForeignKey(News, on_delete=models.CASCADE)
 
+	class Meta:
+		constraints = [
+			UniqueConstraint(fields=['zone', 'news'], name='unique_zone_news')
+		]
+
 	def __str__(self):
 		return "{}->{}".format(self.news.title, self.zone.name)
 
@@ -78,6 +84,11 @@ class NewsInZone(models.Model):
 class TagNews(models.Model):
 	tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
 	news = models.ForeignKey(News, on_delete=models.CASCADE)
+
+	class Meta:
+		constraints = [
+			UniqueConstraint(fields=['tag', 'news'], name='unique_tag_news')
+		]
 
 	def __str__(self):
 		return "{}->{}".format(self.news.title, self.tag.name)

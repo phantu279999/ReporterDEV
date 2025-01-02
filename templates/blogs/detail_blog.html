@@ -13,7 +13,20 @@
     <h1>{{ blog.title }}</h1>
     <p>{{ blog.sapo }}</p>
     <p>{{ blog.word_count }} Words|{{ blog.reading_time }} Minutes</p>
-    <div class="content-blog">
-        {{ blog.content|safe }}
+    <hr>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="content-blog">
+                {{ blog.content|safe }}
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="obj-author" style="border: 1px black solid; border-radius: 10px; padding: 10px;">
+                <h4>Author</h4>
+                <p>{{ blog.author.email }}</p>
+                <p>{{ blog.author.authorprofile.full_name }}</p>
+                <p>{{ blog.author.authorprofile.bio }}</p>
+            </div>
+        </div>
     </div>
 {% endblock %}
