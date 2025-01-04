@@ -9,7 +9,8 @@ def count_word(text):
 	return sum(texts)
 
 
-def reading_time(word_count, words_per_minute=200):
+def get_reading_time(word_count, words_per_minute=200):
+	""" Read avg time of a news"""
 	if word_count <= 0:
 		return 0
 	return round(word_count / words_per_minute)

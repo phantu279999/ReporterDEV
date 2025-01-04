@@ -9,11 +9,7 @@ from .utils import validate_password
 
 @login_required
 def author_profile_view(request):
-	try:
-		profile = models.AuthorProfile.objects.get(user=request.user)
-	except models.AuthorProfile.DoesNotExist:
-		models.AuthorProfile.objects.create(user=request.user).save()
-		profile = models.AuthorProfile.objects.get(user=request.user)
+	profile, created = models.AuthorProfile.objects.get_or_create(user=request.user)
 
 	if request.method == 'POST':
 		form = forms.AuthorProfileForm(request.POST, instance=profile)

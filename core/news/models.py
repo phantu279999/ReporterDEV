@@ -5,7 +5,7 @@ from ckeditor.fields import RichTextField
 from accounts.models import Author
 from core.models import TimeStampedModel
 
-from common.common import count_word, reading_time
+from common.common import count_word, get_reading_time
 
 NEWS_TYPE = (
 	('normal', 'Normal'),
@@ -43,7 +43,7 @@ class News(TimeStampedModel):
 	avatar = models.ImageField(upload_to='avatar', blank=True)
 	news_type = models.CharField(max_length=100, choices=NEWS_TYPE)
 	status = models.BooleanField(default=True)
-	slug = models.SlugField(unique=True)
+	slug = models.SlugField(unique=True, db_index=True)
 	content = RichTextField(blank=True)
 
 	created_by = models.CharField(max_length=200, blank=True)
@@ -62,7 +62,7 @@ class News(TimeStampedModel):
 		return count_word(self.content)
 
 	def reading_time(self):
-		return reading_time(self.word_count())
+		return get_reading_time(self.word_count())
 
 	class Meta:
 		ordering = ('-created_date',)
