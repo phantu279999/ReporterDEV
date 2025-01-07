@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_list_or_404
+from django.core.paginator import Paginator
 
 from .models import News, Zone, NewsInZone, TagNews
 
@@ -45,4 +46,12 @@ def news_in_tag(request, url):
 	tag = tagnews.select_related('tag')[0].tag
 	news = [item.news for item in tagnews.select_related('news')]
 
-	return render(request, 'news/news_in_tag.html', {'tag': tag, 'news': news})
+	paginator = Paginator(news, 10)
+	page_number = request.GET.get('page')
+	page_obj = paginator.get_page(page_number)
+
+	ctx = {
+		'tag': tag,
+		'page_obj': page_obj
+	}
+	return render(request, 'news/news_in_tag.html', context=ctx)

@@ -2,39 +2,55 @@
 {% load static %}
 
 {% block stylesheets %}
-    {{ block.super }}
+{{ block.super }}
 {% endblock %}
 
 {% block title %}
-    {{ tag.name }}
+{{ tag.name }}
 {% endblock %}
 
 {% block content %}
-    <h1>Tag: {{ tag.name }}</h1>
-    <hr>
-    {% for new in news %}
-        <div class="card mb-3" style="max-width: 70%; border-radius: 10px; border: 1px solid black; padding: 10px">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <a href="{% url 'news:detail_news' slug=new.slug %}">
-                        {% if new.avatar %}
-                            <img src="/media/{{ new.avatar }}" class="img-fluid rounded-start card-img-custom"
-                                 alt="{{ new.slug }}">
-                        {% else %}
-                            <img src="/media/example.jpg" class="img-fluid rounded-start card-img-custom"
-                                 alt="{{ new.slug }}">
-                        {% endif %}
-                    </a>
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <a href="{% url 'news:detail_news' slug=new.slug %}"><h5 class="card-title">{{ new.title }}</h5>
-                        </a>
-                        <p class="card-text">{{ new.sapo }}</p>
-                        <p class="card-text"><small class="text-muted">{{ new.created_date|date:"G:i d-m-Y" }}</small></p>
-                    </div>
-                </div>
+<h1>Tag: {{ tag.name }}</h1>
+<hr>
+{% for new in page_obj %}
+<div class="card mb-3" style="max-width: 70%; border-radius: 10px; border: 1px solid black; padding: 10px">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <a href="{% url 'news:detail_news' slug=new.slug %}">
+                {% if new.avatar %}
+                <img src="/media/{{ new.avatar }}" class="img-fluid rounded-start card-img-custom"
+                     alt="{{ new.slug }}">
+                {% else %}
+                <img src="/media/example.jpg" class="img-fluid rounded-start card-img-custom"
+                     alt="{{ new.slug }}">
+                {% endif %}
+            </a>
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <a href="{% url 'news:detail_news' slug=new.slug %}"><h5 class="card-title">{{ new.title }}</h5>
+                </a>
+                <p class="card-text">{{ new.sapo }}</p>
+                <p class="card-text"><small class="text-muted">{{ new.created_date|date:"G:i d-m-Y" }}</small></p>
             </div>
         </div>
-    {% endfor %}
+    </div>
+</div>
+{% endfor %}
+<div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1"><button class="btn btn-warning">&laquo; First</button></a>
+                <a href="?page={{ page_obj.previous_page_number }}"><button class="btn btn-success">Previous</button></a>
+            {% endif %}
+                    <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}"><button class="btn btn-success">Next</button></a>
+            <a href="?page={{ page_obj.paginator.num_pages }}"><button class="btn btn-warning">Last &raquo;</button></a>
+        {% endif %}
+        </span>
+</div>
 {% endblock %}
