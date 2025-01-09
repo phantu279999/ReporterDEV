@@ -60,6 +60,7 @@ class AuthorManager(BaseUserManager):
 		return super().get_queryset(*args, **kwargs).filter(user_type=CustomUser.Types.AUTHOR)
 
 
+# Proxy model
 class Author(CustomUser):
 	base_type = CustomUser.Types.AUTHOR
 	objects = AuthorManager()
