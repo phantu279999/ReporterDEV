@@ -22,6 +22,27 @@
 {% endblock %}
 
 {% block content %}
+    <h2>Featured posts</h2>
+    <div class="row" style="margin-bottom: 30px">
+        <div class="col-lg-8 col-md-6 col-12">
+            <a>
+                <img src="/media/{{ news_focus.0.avatar }}" class="card-img-custom" style="height: 400px;">
+            </a>
+            <a href="{% url 'news:detail_news' slug=news_focus.0.slug %}"><h3>{{ news_focus.0.title }}</h3></a>
+
+        </div>
+        <div class="col-lg-4 col-md-6 col-12">
+            {% for new in news_focus %}
+                {% if forloop.counter > 1 %}
+                    <a>
+                        <img src="/media/{{ new.avatar }}" class="card-img-custom">
+                    </a>
+                    <a href="{% url 'news:detail_news' slug=new.slug %}">{{ new.title }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <h2>Lastest posts</h2>
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for new in news %}
             <div class="col">

@@ -17,10 +17,11 @@ def list_news_view(request):
 	zones = Zone.objects.all()
 	news = News.objects.all()
 
+	news_focus = news.filter(is_focus=True)[:3]
 	return render(
 		request,
 		'news/list_news.html',
-		{'zones': zones, 'news': news}
+		{'zones': zones, 'news': news, 'news_focus': news_focus}
 	)
 
 
