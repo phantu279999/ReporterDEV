@@ -20,6 +20,12 @@ def author_profile_view(request):
 	return render(request, 'accounts/profile.html', {'profile': profile, 'form': form})
 
 
+def other_author_view(request, pk):
+
+	return render(request, 'accounts/author_profile.html')
+
+
+
 def login_view(request):
 	if request.method == 'POST':
 		email = request.POST['email']

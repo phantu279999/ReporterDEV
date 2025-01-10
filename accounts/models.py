@@ -98,6 +98,11 @@ class AuthorProfile(models.Model):
 		return self.user.email
 
 
+class Follow(models.Model):
+	follower = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='follower')
+	following = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='following')
+
+
 @receiver(post_save, sender=Author)
 def create_author_profile(sender, instance, created, **kwargs):
 	if created:
