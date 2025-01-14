@@ -1,15 +1,17 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.views import login_required
 from django.contrib.auth import login, logout, authenticate
+from django.urls import reverse
 
-from . import models, forms
+from . import forms
+from .models import AuthorProfile, Author, CustomUser, Follow
 from .utils import validate_password
 
 
 @login_required
 def author_profile_view(request):
-	profile, created = models.AuthorProfile.objects.get_or_create(user=request.user)
+	profile, created = AuthorProfile.objects.get_or_create(user=request.user)
 
 	if request.method == 'POST':
 		form = forms.AuthorProfileForm(request.POST, instance=profile)
@@ -21,8 +23,26 @@ def author_profile_view(request):
 
 
 def other_author_view(request, pk):
+	author = get_object_or_404(Author, pk=pk)
+	profile = get_object_or_404(AuthorProfile, user=author)
 
-	return render(request, 'accounts/author_profile.html')
+	follow_instance = Follow.objects.filter(follower=request.user, following=author)
+	is_following = follow_instance.exists()
+
+	if request.method == 'POST':
+		status_follow = request.POST.get('follow', '')
+		if status_follow == 'follow':
+			Follow.objects.create(follower=request.user, following=author)
+		elif status_follow == 'unfollow':
+			follow_instance.delete()
+		return redirect(reverse('accounts:other_profile', kwargs={'pk': pk}))
+
+	number_follower = Follow.objects.filter(following=author).count()
+	return render(request, 'accounts/author_profile.html', {
+		'profile': profile,
+		'number_follower': number_follower,
+		'is_following': is_following,
+	})
 
 
 
@@ -50,11 +70,11 @@ def register_view(request):
 			messages.error(request, password_error)
 			return render(request, 'accounts/register.html')
 
-		if models.CustomUser.objects.filter(email=email).exists():
+		if CustomUser.objects.filter(email=email).exists():
 			messages.error(request, "Email is already registered")
 			return render(request, 'accounts/register.html')
 
-		user = models.CustomUser.objects.create_user(email=email, password=password)
+		user = CustomUser.objects.create_user(email=email, password=password)
 		user.save()
 
 		return redirect('home')

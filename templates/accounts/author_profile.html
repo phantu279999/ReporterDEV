@@ -1,10 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}"/>
+{% endblock %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+
+{% block content %}
+    <div class="row" style="margin-top: 30px;">
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="info-author">
+                {% if profile.avatar %}
+                    <img src="/media/{{ profile.avatar }}" alt="avatar_author" class="avatar-author">
+                {% else %}
+                    <img src="/media/example.jpg" alt="avatar_author" class="avatar-author">
+                {% endif %}
+                {% if profile.full_name %}
+                    <p><b>{{ profile.full_name }}</b></p>
+                {% else %}
+                    <p><b>John Doe</b></p>
+                {% endif %}
+                <p>{{ profile.user.email }}</p>
+                <p>Number of following: {{ number_follower }}</p>
+                {% if request.user.is_authenticated %}
+                    {% if request.user.pk != profile.user.pk %}
+                        <form method="post">
+                            {% csrf_token %}
+                            {% if is_following %}
+                                <button class="btn btn-info" style="width: 100%" type="submit" name="follow" value="unfollow">Unfollow</button>
+                            {% else %}
+                                <button class="btn btn-info" style="width: 100%" type="submit" name="follow" value="follow">Follow</button>
+                            {% endif %}
+                        </form>
+                    {% endif %}
+                {% endif %}
+                <hr>
+                <p>{{ profile.bio }}</p>
+            </div>
+        </div>
+        <div class="col-lg-8 col-md-6 col-12">
+            <div class="info-author-2">
+                <p><b>Phone</b>: {{ profile.phone }}</p>
+                <hr>
+                <p><b>Address</b>: {{ profile.address }}</p>
+                <hr>
+                <p><b>Facebook</b>: {{ profile.link_facebook }}</p>
+                <hr>
+                <p><b>X(twitter)</b>: {{ profile.link_x }}</p>
+                <hr>
+                <p><b>Link</b>: {{ profile.link_other }}</p>
+            </div>
+        </div>
+    </div>
+
+    {% include 'accounts/edit_profile_modal.html' %}
+{% endblock %}

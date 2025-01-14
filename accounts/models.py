@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager, Group, Permission
 from django.utils.translation import gettext_lazy as _
 from django.db.models.signals import post_save
+from django.db.models import UniqueConstraint
 from django.dispatch import receiver
 
 
@@ -102,6 +103,13 @@ class Follow(models.Model):
 	follower = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='follower')
 	following = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='following')
 
+	class Meta:
+		constraints = [
+			UniqueConstraint(fields=['follower', 'following'], name='unique_follower_following')
+		]
+
+	def __str__(self):
+		return "{} -> {}".format(self.follower.email, self.following.email)
 
 @receiver(post_save, sender=Author)
 def create_author_profile(sender, instance, created, **kwargs):
