@@ -24,7 +24,7 @@ def author_profile_view(request):
 
 def other_author_view(request, pk):
 	author = get_object_or_404(Author, pk=pk)
-	profile = get_object_or_404(AuthorProfile, user=author)
+	profile, created = AuthorProfile.objects.get_or_create(user=author)
 
 	follow_instance = Follow.objects.filter(follower=request.user, following=author)
 	is_following = follow_instance.exists()

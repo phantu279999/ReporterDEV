@@ -22,3 +22,14 @@ REST_FRAMEWORK = {
 		'rest_framework.permissions.IsAdminUser',
 	}
 }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'reporterdev',
+        'USER': 'root',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}

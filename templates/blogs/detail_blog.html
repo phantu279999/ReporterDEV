@@ -23,7 +23,7 @@
         <div class="col-lg-4">
             <div class="obj-author" style="border: 1px black solid; border-radius: 10px; padding: 10px;">
                 <h4>Author</h4>
-                <p>{{ blog.author.email }}</p>
+                <a href="{% url 'accounts:other_profile' pk=blog.author.pk %}"><p>{{ blog.author.email }}</p></a>
                 <p>{{ blog.author.authorprofile.full_name }}</p>
                 <p>{{ blog.author.authorprofile.bio }}</p>
             </div>
