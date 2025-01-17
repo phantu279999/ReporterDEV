@@ -55,6 +55,12 @@ class CustomUser(AbstractUser):
 
 	objects = CustomUserManager()
 
+	def save(self, *args, **kwargs):
+		# Ensure base_type matches user_type
+		if not self.base_type or self.base_type != self.user_type:
+			self.base_type = self.user_type
+		super().save(*args, **kwargs)
+
 
 class AuthorManager(BaseUserManager):
 	def get_queryset(self, *args, **kwargs):
