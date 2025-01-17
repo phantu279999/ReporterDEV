@@ -1,5 +1,4 @@
 from rest_framework import generics, status
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 
@@ -7,15 +6,7 @@ from core.news import models as news_model
 from core.blogs import models as blog_model
 
 from .serializers import NewsSerializer
-
-
-class IsAuthor(IsAuthenticated):
-    def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.user_type == 'author'
-
-class IsAdmin(IsAuthenticated):
-    def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.user_type == 'admin'
+from .permissions import IsAuthor, IsAdmin
 
 
 class NewsView(generics.ListCreateAPIView):
