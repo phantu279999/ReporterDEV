@@ -145,3 +145,29 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+	"DEFAULT_AUTHENTICATION_CLASSES": [
+		"rest_framework.authentication.BasicAuthentication",
+		"rest_framework.authentication.SessionAuthentication",
+		"rest_framework.authentication.TokenAuthentication",
+		# "rest_framework_simplejwt.authentication.JWTAuthentication"
+	],
+	"DEFAULT_PERMISSION_CLASSES": [
+		'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+	],
+	'DEFAULT_THROTTLE_CLASSESS': [
+		'rest_framework.throttling.AnonRateThrottle',
+		'rest_framework.throttling.UserRateThrottle'
+	],
+	'DEFAULT_THROTTLE_RATES': {
+		'anon': '500/day',
+		'user': '2000/day',
+	},
+	"DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+	"PAGE_SIZE": 10,
+	"DEFAULT_FILTER_BACKENDS": [
+		"django_filters.rest_framework.DjangoFilterBackend",
+		"rest_framework.filters.OrderingFilter"
+	],
+}

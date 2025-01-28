@@ -1,14 +1,15 @@
 from django.urls import path, include
+from rest_framework.authtoken import views as view_auth
 
 from . import views
 
-# app_name = 'api'
 
 urlpatterns = [
-    path('news/', views.NewsView.as_view(), name='news'),
-    path('news/<int:pk>/', views.NewsDetailView.as_view(), name='detail_news'),
+    path('news/', views.NewsView.as_view(), name='api_news'),
+    path('news/<int:pk>/', views.NewsDetailView.as_view(), name='api_detail_news'),
 ]
 
 urlpatterns += [
     path('auth/', include('rest_framework.urls')),
+    path("token-auth/", view_auth.obtain_auth_token),
 ]
