@@ -1,9 +1,13 @@
 from django.urls import path, include, re_path
 from rest_framework.authtoken import views as view_auth
+from rest_framework.routers import DefaultRouter
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 
 from . import views
+
+router = DefaultRouter()
+router.register('tags', views.TagViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -19,6 +23,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('news/', views.NewsView.as_view(), name='api_news'),
     path('news/<int:pk>/', views.NewsDetailView.as_view(), name='api_detail_news'),
+    path('', include(router.urls))
 ]
 
 urlpatterns += [
