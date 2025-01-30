@@ -2,48 +2,49 @@
 {% load static %}
 
 {% block stylesheets %}
-    {{ block.super }}
+{{ block.super }}
 {% endblock %}
 
 {% block title %}
-    {{ new.title }}
+{{ new.title }}
 {% endblock %}
 
 {% block content %}
-    <h1>{{ new.title }}</h1>
-    <div class="row">
-        <div class="col">
-            <p>{{ new.author.email }} | {{ new.created_date }}</p>
+<h1>{{ new.title }}</h1>
+<div class="row">
+    <div class="col">
+        <p>{{ new.author.email }} | {{ new.created_date }}</p>
+    </div>
+    <div class="col">
+        <p style="text-align: right">{{ new.word_count }} Words({{ new.reading_time }} Minutes)</p>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-lg-8">
+        <p><b>{{ new.sapo }}</b></p>
+        <div class="content-news">
+            {{ new.content|safe }}
         </div>
-        <div class="col">
-            <p style="text-align: right">{{ new.word_count }} Words({{ new.reading_time }} Minutes)</p>
+        <hr>
+        <b>Tags:</b>
+        <div class="tags">
+            {% for tag in tag_in_news %}
+            <h3 class="tag-news"><a href="{% url 'news:news_in_tag' url=tag.url %}">{{ tag }}</a></h3>
+            {% endfor %}
         </div>
     </div>
-    <hr>
-    <div class="row">
-        <div class="col-lg-8">
-            <p><b>{{ new.sapo }}</b></p>
-            <div class="content-news">
-                {{ new.content|safe }}
-            </div>
+    <div class="col-lg-4">
+        <div style="border: 2px black solid; border-radius: 10px; padding: 10px">
+            <h2>News relation</h2>
             <hr>
-            <b>Tags:</b>
-            <div class="tags">
-                {% for tag in tag_in_news %}
-                    <h3 class="tag-news"><a href="{% url 'news:news_in_tag' url=tag.url %}">{{ tag }}</a></h3>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div style="border: 2px black solid; border-radius: 10px; padding: 10px">
-                <h2>News relation</h2>
-                <hr>
-                {% for new in news_in_zone %}
-                    <a href="{% url 'news:detail_news' slug=new.slug %}">
-                        <h3>{{ new.title }}</h3>
-                    </a>
-                {% endfor %}
-            </div>
+            {% for new in news_in_zone %}
+            <a href="{% url 'news:detail_news' slug=new.slug %}">
+                <h3>{{ new.title }}</h3>
+            </a>
+            {% endfor %}
         </div>
     </div>
+</div>
+{% include "news/new_comments.html" %}
 {% endblock %}

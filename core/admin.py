@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from .models import Comment
 from core.news.models import News, NewsInZone, Zone, Tag, TagNews
 from core.blogs.models import Blog, Category, BlogInCate
 
@@ -38,3 +39,4 @@ admin.site.register(TagNews)
 admin.site.register(Blog, BlogAdmin)
 admin.site.register(Category)
 admin.site.register(BlogInCate)
+admin.site.register(Comment)

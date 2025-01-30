@@ -1,9 +1,10 @@
 from django.db import models
 from django.db.models import UniqueConstraint
+from django.contrib.contenttypes.fields import GenericRelation
 from ckeditor.fields import RichTextField
 
 from accounts.models import Author
-from core.models import TimeStampedModel
+from core.models import TimeStampedModel, Comment
 
 from common.common import count_word, get_reading_time
 
@@ -54,6 +55,7 @@ class News(TimeStampedModel):
 	is_pr = models.BooleanField(default=False)
 
 	author = models.ForeignKey(Author, on_delete=models.CASCADE)
+	comments = GenericRelation(Comment)
 
 	def __str__(self):
 		return self.title

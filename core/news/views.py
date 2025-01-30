@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 
 from .models import News, Zone, NewsInZone, TagNews
+from .forms import CommentForm
 
 
 def news_in_zone(request, url):
@@ -35,10 +36,21 @@ def detail_news_view(request, slug):
 		for news_in_zone_item in zone_news.zone.newsinzone_set.all()
 	)
 	tag_in_news = [item.tag for item in tagnews]
+	if request.method == 'POST':
+		comment_form = CommentForm(request.POST)
+		if comment_form.is_valid():
+			comment = comment_form.save(commit=False)
+			comment.content_object = new
+			comment.creator = request.user
+			comment.save()
+			return redirect(request.path_info)
+	else:
+		comment_form = CommentForm()
 	return render(request, 'news/detail_news.html', {
 		'new': new,
 		'tag_in_news': tag_in_news,
-		'news_in_zone': list(news_in_zone)
+		'news_in_zone': list(news_in_zone),
+		'comment_form': comment_form
 	})
 
 
