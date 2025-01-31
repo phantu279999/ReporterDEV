@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from core.news import models as news_model
 from core.blogs import models as blog_model
 
-from .serializers import NewsSerializer, TagSerializer
+from .serializers import NewsSerializer, TagSerializer, BlogSerializer
 from .permissions import IsAuthor, IsAdmin
 from .filters import NewsFilterSet
 
@@ -53,3 +53,13 @@ class NewsDetailView(generics.RetrieveUpdateDestroyAPIView):
 class TagViewSet(viewsets.ModelViewSet):
     queryset = news_model.Tag.objects.all()
     serializer_class = TagSerializer
+
+
+class BlogListView(generics.ListAPIView):
+    queryset = blog_model.Blog.objects.all()
+    serializer_class = BlogSerializer
+
+
+class BlogDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = blog_model.Blog.objects.all()
+    serializer_class = BlogSerializer

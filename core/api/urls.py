@@ -23,6 +23,8 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('news/', views.NewsView.as_view(), name='api_news'),
     path('news/<int:pk>/', views.NewsDetailView.as_view(), name='api_detail_news'),
+    path('blog/', views.BlogListView.as_view(), name='api_blog'),
+    path('blog/<int:pk>/', views.BlogDetailView.as_view(), name='api_detail_blog'),
     path('', include(router.urls))
 ]
 
