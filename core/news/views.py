@@ -22,7 +22,7 @@ def list_news_view(request):
 	return render(
 		request,
 		'news/list_news.html',
-		{'zones': zones, 'news': news, 'news_focus': news_focus}
+		{'zones': zones, 'news': news[:12], 'news_focus': news_focus}
 	)
 
 
@@ -68,3 +68,16 @@ def news_in_tag(request, url):
 		'page_obj': page_obj
 	}
 	return render(request, 'news/news_in_tag.html', context=ctx)
+
+
+def lastest_news_view(request):
+	news = News.objects.all()
+
+	paginator = Paginator(news, 1)
+	page_number = request.GET.get('page')
+	page_obj = paginator.get_page(page_number)
+
+	ctx = {
+		'page_obj': page_obj
+	}
+	return render(request, 'news/lastest_news.html', context=ctx)

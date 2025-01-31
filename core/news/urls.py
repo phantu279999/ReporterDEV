@@ -9,4 +9,5 @@ urlpatterns = [
 	path('detail/<slug:slug>/', views.detail_news_view, name='detail_news'),
 	path('news-zone/<slug:url>/', views.news_in_zone, name='news_in_zone'),
 	path('news-tag/<slug:url>/', views.news_in_tag, name='news_in_tag'),
+	path("lastest-news/", views.lastest_news_view, name='lastest_news')
 ]
