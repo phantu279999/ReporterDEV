@@ -73,7 +73,7 @@ def news_in_tag(request, url):
 def lastest_news_view(request):
 	news = News.objects.all()
 
-	paginator = Paginator(news, 1)
+	paginator = Paginator(news, 20)
 	page_number = request.GET.get('page')
 	page_obj = paginator.get_page(page_number)
 
