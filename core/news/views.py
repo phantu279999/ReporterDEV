@@ -1,8 +1,22 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.core.paginator import Paginator
 
 from .models import News, Zone, NewsInZone, TagNews
 from .forms import CommentForm
+
+
+def list_news_view(request):
+	zones = Zone.objects.all()
+	news = News.objects.all()
+	if 'search' in request.GET and request.GET['search']:
+		return redirect(reverse('news:lastest_news') + f'?keyword={request.GET["search"]}')
+	news_focus = news.filter(is_focus=True)[:3]
+	return render(
+		request,
+		'news/list_news.html',
+		{'zones': zones, 'news': news[:12], 'news_focus': news_focus}
+	)
 
 
 def news_in_zone(request, url):
@@ -13,17 +27,6 @@ def news_in_zone(request, url):
 	# news = News.objects.filter(newsinzone__zone__url=url).distinct()
 	return render(request, 'news/news_in_zone.html', {'zones': zones, 'zone': zone, 'news': news})
 
-
-def list_news_view(request):
-	zones = Zone.objects.all()
-	news = News.objects.all()
-
-	news_focus = news.filter(is_focus=True)[:3]
-	return render(
-		request,
-		'news/list_news.html',
-		{'zones': zones, 'news': news[:12], 'news_focus': news_focus}
-	)
 
 
 def detail_news_view(request, slug):
@@ -72,7 +75,8 @@ def news_in_tag(request, url):
 
 def lastest_news_view(request):
 	news = News.objects.all()
-
+	if 'keyword' in request.GET:
+		news = news.filter(title__icontains=request.GET['keyword'])
 	paginator = Paginator(news, 20)
 	page_number = request.GET.get('page')
 	page_obj = paginator.get_page(page_number)
