@@ -18,7 +18,7 @@ def author_profile_view(request):
 		if form.is_valid():
 			form.save()
 	else:
-		form = forms.AuthorProfileForm()
+		form = forms.AuthorProfileForm(instance=profile)
 	return render(request, 'accounts/profile.html', {'profile': profile, 'form': form})
 
 

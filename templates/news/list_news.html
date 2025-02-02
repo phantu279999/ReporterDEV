@@ -2,75 +2,77 @@
 {% load static %}
 
 {% block seo %}
-<meta name="keywords" content="">
-<meta name="description" content="">
-<meta property="og:type" content="article"/>
-<meta property="og:title" content="Danh sách tin tức ngày trong giới lập trình"/>
-<meta property="og:description" content="Tin tức, lập trình, tự học, cộng đồng lập trình"/>
-<meta property="og:image" content=""/>
-<meta property="og:url" content="https://reportdev.com.vn{{ request.path }}"/>
-<meta property="og:site_name" content="ReporterDEV"/>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Danh sách tin tức ngày trong giới lập trình"/>
+    <meta property="og:description" content="Tin tức, lập trình, tự học, cộng đồng lập trình"/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content="https://reportdev.com.vn{{ request.path }}"/>
+    <meta property="og:site_name" content="ReporterDEV"/>
 {% endblock %}
 
 {% block stylesheets %}
-{{ block.super }}
-<link rel="stylesheet" type="text/css" href="{% static 'css/list_news.css' %}"/>
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/list_news.css' %}"/>
 {% endblock %}
 
 {% block title %}
-List News
+    List News
 {% endblock %}
 
 {% block content %}
-    <div>
-        <form method="get">
-            {% csrf_token %}
-            <input type="text" name="search">
-            <button type="submit">Search</button>
-        </form>
-    </div>
-<h2>Featured posts</h2>
-<div class="row" style="margin-bottom: 30px">
-    <div class="col-lg-8 col-md-6 col-12">
-        <a>
-            <img src="/media/{{ news_focus.0.avatar }}" class="card-img-custom" style="height: 400px;">
-        </a>
-        <a href="{% url 'news:detail_news' slug=news_focus.0.slug %}"><h3>{{ news_focus.0.title }}</h3></a>
-
-    </div>
-    <div class="col-lg-4 col-md-6 col-12">
-        {% for new in news_focus %}
-        {% if forloop.counter > 1 %}
-        <a>
-            <img src="/media/{{ new.avatar }}" class="card-img-custom">
-        </a>
-        <a href="{% url 'news:detail_news' slug=new.slug %}">{{ new.title }}</a>
-        {% endif %}
-        {% endfor %}
-    </div>
-</div>
-<h2>Lastest posts</h2>
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    {% for new in news %}
-    <div class="col">
-        <div class="card">
-            <a href="{% url 'news:detail_news' slug=new.slug %}">
-                {% if new.avatar %}
-                <img src="/media/{{ new.avatar }}" class="card-img-top card-img-custom"
-                     alt="{{ new.slug }}">
-                {% else %}
-                <img src="/media/example.jpg" class="card-img-top card-img-custom" alt="{{ new.slug }}">
-                {% endif %}
-            </a>
-            <div class="card-body">
-                <a href="{% url 'news:detail_news' slug=new.slug %}"><h5 class="card-title">{{ new.title }}</h5>
-                </a>
+    <form method="get">
+        <div class="input-group mb-3">
+            <input type="text" name="search" class="form-control" placeholder="Search..." aria-label="Search"
+                   aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button type="submit" class="input-group-text" id="basic-addon2">Search</button>
             </div>
         </div>
+    </form>
+    <h2>Featured posts</h2>
+    <div class="row" style="margin-bottom: 30px">
+        <div class="col-lg-8 col-md-6 col-12">
+            <a>
+                <img src="/media/{{ news_focus.0.avatar }}" class="card-img-custom" style="height: 400px;">
+            </a>
+            <a href="{% url 'news:detail_news' slug=news_focus.0.slug %}"><h3>{{ news_focus.0.title }}</h3></a>
+
+        </div>
+        <div class="col-lg-4 col-md-6 col-12">
+            {% for new in news_focus %}
+                {% if forloop.counter > 1 %}
+                    <a>
+                        <img src="/media/{{ new.avatar }}" class="card-img-custom">
+                    </a>
+                    <a href="{% url 'news:detail_news' slug=new.slug %}">{{ new.title }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
-    {% endfor %}
-</div>
-<a href="{% url 'news:lastest_news' %}">
-    <button class="btn btn-success" type="button">More</button>
-</a>
+    <h2>Lastest posts</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for new in news %}
+            <div class="col">
+                <div class="card">
+                    <a href="{% url 'news:detail_news' slug=new.slug %}">
+                        {% if new.avatar %}
+                            <img src="/media/{{ new.avatar }}" class="card-img-top card-img-custom"
+                                 alt="{{ new.slug }}">
+                        {% else %}
+                            <img src="/media/example.jpg" class="card-img-top card-img-custom" alt="{{ new.slug }}">
+                        {% endif %}
+                    </a>
+                    <div class="card-body">
+                        <a href="{% url 'news:detail_news' slug=new.slug %}"><h5 class="card-title">{{ new.title }}</h5>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <a href="{% url 'news:lastest_news' %}">
+        <button class="btn btn-success" type="button">More</button>
+    </a>
 {% endblock %}
