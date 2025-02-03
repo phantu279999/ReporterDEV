@@ -3,12 +3,12 @@ from django.db.models import Q
 from rest_framework import generics, status, viewsets
 from rest_framework.response import Response
 
-
+from accounts.models import CustomUser as User
 from core.news import models as news_model
 from core.blogs import models as blog_model
 
-from .serializers import NewsSerializer, TagSerializer, BlogSerializer
-from .permissions import IsAuthor, IsAdmin
+from .serializers import NewsSerializer, TagSerializer, BlogSerializer, UserSerializer
+from .permissions import IsAuthor, IsAdmin, IsAuthenticated
 from .filters import NewsFilterSet
 
 
@@ -63,3 +63,25 @@ class BlogListView(generics.ListAPIView):
 class BlogDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = blog_model.Blog.objects.all()
     serializer_class = BlogSerializer
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_anonymous:
+            return User.objects.none()
+        elif self.request.user.user_type == 'admin':
+            return self.queryset
+        else:
+            return self.queryset.filter(email=self.request.user.email)
+
+    def get_permissions(self):
+        permission_classes = []
+        if self.action == 'retrieve':
+            permission_classes = [IsAuthenticated]
+        elif self.action in ['update', 'destroy', 'partial_update']:
+            permission_classes = [IsAdmin]
+        return [permission() for permission in permission_classes]
+

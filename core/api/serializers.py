@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from accounts.models import CustomUser as User
 from core.news.models import News, Tag, TagNews
 from core.blogs.models import Blog
 
@@ -49,3 +50,8 @@ class BlogSerializer(serializers.ModelSerializer):
         model = Blog
         fields = '__all__'
 
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'

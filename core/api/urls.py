@@ -8,6 +8,7 @@ from . import views
 
 router = DefaultRouter()
 router.register('tags', views.TagViewSet)
+router.register('users', views.UserViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(

@@ -2,57 +2,59 @@
 {% load filter_news %}
 
 {% block stylesheets %}
-{{ block.super }}
+    {{ block.super }}
 {% endblock %}
 
 {% block title %}
-Home
+    Home
 {% endblock %}
 
 
 {% block content %}
-<div class="hero">
-    <h1>Welcome to DevWorld</h1>
-</div>
+    <div class="hero">
+        <h1>Welcome to DevWorld</h1>
+    </div>
 
-<div class="container">
-    <section id="news" class="section">
-        <h2>Latest News</h2>
-        <div class="grid">
-            {% for new in news %}
-            <div class="card">
-                <a href="{% url 'news:detail_news' slug=new.slug %}">
-                    {% if new.avatar %}
-                    <img src="/media/{{ new.avatar }}" alt="{{ new.slug }}">
-                    {% else %}
-                    <img src="/media/example.jpg" alt="{{ new.slug }}">
-                    {% endif %}
-                </a>
-                <a href="{% url 'news:detail_news' slug=new.slug %}"><h3>{{ new.title }}</h3></a>
-                <p>{{ new.sapo|filter_sapo }}</p>
+    <div class="container">
+        <section id="news" class="section">
+            <a href="{% url 'news:lastest_news' %}">
+                <h2>Latest News</h2>
+            </a>
+            <div class="grid">
+                {% for new in news %}
+                    <div class="card">
+                        <a href="{% url 'news:detail_news' slug=new.slug %}">
+                            {% if new.avatar %}
+                                <img src="/media/{{ new.avatar }}" alt="{{ new.slug }}">
+                            {% else %}
+                                <img src="/media/example.jpg" alt="{{ new.slug }}">
+                            {% endif %}
+                        </a>
+                        <a href="{% url 'news:detail_news' slug=new.slug %}"><h3>{{ new.title }}</h3></a>
+                        <p>{{ new.sapo|filter_sapo }}</p>
+                    </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
-    </section>
+        </section>
 
-    <section id="blogs" class="section">
-        <h2>Featured Blogs</h2>
-        <div class="grid">
-            {% for blog in blogs %}
-            <div class="card">
-                <a href="{% url 'blog:detail_blog' slug=blog.slug %}">
-                    {% if blog.avatar %}
-                    <img src="/media/{{ blog.avatar }}" alt="{{ blog.slug }}">
-                    {% else %}
-                    <img src="/media/example.jpg" alt="{{ blog.slug }}">
-                    {% endif %}
-                </a>
-                <a href="{% url 'blog:detail_blog' slug=blog.slug %}"><h3>{{ blog.title }}</h3></a>
-                <p>{{ blog.sapo|filter_sapo }}</p>
+        <section id="blogs" class="section">
+            <h2>Featured Blogs</h2>
+            <div class="grid">
+                {% for blog in blogs %}
+                    <div class="card">
+                        <a href="{% url 'blog:detail_blog' slug=blog.slug %}">
+                            {% if blog.avatar %}
+                                <img src="/media/{{ blog.avatar }}" alt="{{ blog.slug }}">
+                            {% else %}
+                                <img src="/media/example.jpg" alt="{{ blog.slug }}">
+                            {% endif %}
+                        </a>
+                        <a href="{% url 'blog:detail_blog' slug=blog.slug %}"><h3>{{ blog.title }}</h3></a>
+                        <p>{{ blog.sapo|filter_sapo }}</p>
+                    </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
-    </section>
-</div>
+        </section>
+    </div>
 
 {% endblock %}
