@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from accounts.models import CustomUser as User
 from core.news.models import News, Tag, TagNews
-from core.blogs.models import Blog
+from core.blogs.models import Blog, Category
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -48,6 +48,12 @@ class NewsSerializer(serializers.ModelSerializer):
 class BlogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Blog
+        fields = '__all__'
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
         fields = '__all__'
 
 

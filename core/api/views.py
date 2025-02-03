@@ -7,7 +7,7 @@ from accounts.models import CustomUser as User
 from core.news import models as news_model
 from core.blogs import models as blog_model
 
-from .serializers import NewsSerializer, TagSerializer, BlogSerializer, UserSerializer
+from .serializers import NewsSerializer, TagSerializer, BlogSerializer, CategorySerializer, UserSerializer
 from .permissions import IsAuthor, IsAdmin, IsAuthenticated
 from .filters import NewsFilterSet
 
@@ -63,6 +63,11 @@ class BlogListView(generics.ListAPIView):
 class BlogDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = blog_model.Blog.objects.all()
     serializer_class = BlogSerializer
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = blog_model.Category.objects.all()
+    serializer_class = CategorySerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
