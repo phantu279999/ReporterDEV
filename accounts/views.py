@@ -26,8 +26,11 @@ def other_author_view(request, pk):
 	author = get_object_or_404(Author, pk=pk)
 	profile, created = AuthorProfile.objects.get_or_create(user=author)
 
-	follow_instance = Follow.objects.filter(follower=request.user, following=author)
-	is_following = follow_instance.exists()
+	follow_instance = None
+	is_following = False
+	if request.user.is_authenticated:
+		follow_instance = Follow.objects.filter(follower=request.user, following=author)
+		is_following = follow_instance.exists()
 
 	if request.method == 'POST':
 		status_follow = request.POST.get('follow', '')

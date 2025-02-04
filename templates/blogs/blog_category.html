@@ -1,5 +1,16 @@
 {% extends 'blogs/base_blog.html' %}
 
+{% block seo %}
+    <meta name="keywords" content="{{ category.meta_keyword }}">
+    <meta name="description" content="{{ category.meta_description }}">
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="{{ category.meta_name }}"/>
+    <meta property="og:description" content="{{ category.meta_description }}"/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content="https://reportdev.com.vn{{ request.path }}"/>
+    <meta property="og:site_name" content="ReporterDEV"/>
+{% endblock %}
+
 {% block stylesheets %}
     {{ block.super }}
 {% endblock %}

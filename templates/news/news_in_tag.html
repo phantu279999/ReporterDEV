@@ -9,6 +9,18 @@
 {{ tag.name }}
 {% endblock %}
 
+{% block seo %}
+    <meta name="keywords" content="{{ tag.meta_keyword }}">
+    <meta name="description" content="{{ tag.meta_description }}">
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="{{ tag.meta_name }}"/>
+    <meta property="og:description" content="{{ tag.meta_description }}"/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content="https://reportdev.com.vn{{ request.path }}"/>
+    <meta property="og:site_name" content="ReporterDEV"/>
+{% endblock %}
+
+
 {% block content %}
 <h1>Tag: {{ tag.name }}</h1>
 <hr>

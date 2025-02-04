@@ -1,6 +1,17 @@
 {% extends 'news/base_news.html' %}
 {% load static %}
 
+{% block seo %}
+    <meta name="keywords" content="{{ zone.meta_keyword }}">
+    <meta name="description" content="{{ zone.meta_description }}">
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="{{ zone.meta_name }}"/>
+    <meta property="og:description" content="{{ zone.meta_description }}"/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content="https://reportdev.com.vn{{ request.path }}"/>
+    <meta property="og:site_name" content="ReporterDEV"/>
+{% endblock %}
+
 {% block stylesheets %}
     {{ block.super }}
 {% endblock %}
