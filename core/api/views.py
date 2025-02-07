@@ -1,9 +1,9 @@
 from django.utils import timezone
 from django.db.models import Q
 from rest_framework import generics, status, viewsets
-from rest_framework.response import Response
+# from rest_framework.response import Response
 
-from accounts.models import CustomUser as User
+# from accounts.models import CustomUser as User
 from core.news import models as news_model
 from core.blogs import models as blog_model
 
