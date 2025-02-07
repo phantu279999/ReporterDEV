@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from djoser.serializers import UserSerializer as DjoserUserSerializer
 
 from accounts.models import CustomUser as User
 from core.news.models import News, Tag, TagNews
@@ -61,3 +62,8 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+
+
+class CustomDjoserUserSerializer(DjoserUserSerializer):
+    class Meta(DjoserUserSerializer.Meta):
+        ref_name = 'DjoserUserSerializer'

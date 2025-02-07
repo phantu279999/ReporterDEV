@@ -145,7 +145,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-API_URL = 'http://localhost:8000/api/v1/'
+API_URL = '/api/v1/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -173,4 +173,10 @@ REST_FRAMEWORK = {
 		"django_filters.rest_framework.DjangoFilterBackend",
 		"rest_framework.filters.OrderingFilter"
 	],
+}
+
+DJOSER = {
+    'SERIALIZERS': {
+        'user': 'core.api.serializers.CustomDjoserUserSerializer',
+    }
 }

@@ -55,12 +55,7 @@ class TagViewSet(viewsets.ModelViewSet):
     serializer_class = TagSerializer
 
 
-class BlogListView(generics.ListAPIView):
-    queryset = blog_model.Blog.objects.all()
-    serializer_class = BlogSerializer
-
-
-class BlogDetailView(generics.RetrieveUpdateDestroyAPIView):
+class BlogViewSet(viewsets.ModelViewSet):
     queryset = blog_model.Blog.objects.all()
     serializer_class = BlogSerializer
 
@@ -70,23 +65,23 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-    def get_queryset(self):
-        if self.request.user.is_anonymous:
-            return User.objects.none()
-        elif self.request.user.user_type == 'admin':
-            return self.queryset
-        else:
-            return self.queryset.filter(email=self.request.user.email)
-
-    def get_permissions(self):
-        permission_classes = []
-        if self.action == 'retrieve':
-            permission_classes = [IsAuthenticated]
-        elif self.action in ['update', 'destroy', 'partial_update']:
-            permission_classes = [IsAdmin]
-        return [permission() for permission in permission_classes]
-
+# class UserViewSet(viewsets.ModelViewSet):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+#
+#     def get_queryset(self):
+#         if self.request.user.is_anonymous:
+#             return User.objects.none()
+#         elif self.request.user.user_type == 'admin':
+#             return self.queryset
+#         else:
+#             return self.queryset.filter(email=self.request.user.email)
+#
+#     def get_permissions(self):
+#         permission_classes = []
+#         if self.action == 'retrieve':
+#             permission_classes = [IsAuthenticated]
+#         elif self.action in ['update', 'destroy', 'partial_update']:
+#             permission_classes = [IsAdmin]
+#         return [permission() for permission in permission_classes]
+#

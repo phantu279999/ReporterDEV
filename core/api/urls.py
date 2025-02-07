@@ -10,7 +10,8 @@ from . import views
 
 router = DefaultRouter()
 router.register('tags', views.TagViewSet)
-router.register('users', views.UserViewSet)
+# router.register('users', views.UserViewSet)
+router.register('blog', views.BlogViewSet)
 router.register('categories', views.CategoryViewSet)
 
 schema_view = get_schema_view(
@@ -28,19 +29,13 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('news/', views.NewsView.as_view(), name='api_news'),
     path('news/<int:pk>/', views.NewsDetailView.as_view(), name='api_detail_news'),
-    path('blog/', views.BlogListView.as_view(), name='api_blog'),
-    path('blog/<int:pk>/', views.BlogDetailView.as_view(), name='api_detail_blog'),
-    path('', include(router.urls)),
+
     path('auth/', include('rest_framework.urls')),
     path("token-auth/", view_auth.obtain_auth_token),
-    re_path(
-        r"^swagger(?P<swagger_format>\.json|\.yaml)$",
-        schema_view.without_ui(cache_timeout=0),
-        name="schema-json",
-    ),
-    path(
-        "swagger/",
-        schema_view.with_ui("swagger", cache_timeout=0),
-        name="schema-swagger-ui",
-    ),
+
+    path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+
+    path('', include(router.urls)),
 ]
