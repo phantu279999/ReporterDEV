@@ -38,6 +38,7 @@ class NewsSerializer(serializers.ModelSerializer):
             'is_focus',
             'is_pr',
             'tags',
+            'author'
         ]
 
     def get_tags(self, obj):

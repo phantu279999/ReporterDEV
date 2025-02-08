@@ -18,10 +18,10 @@ class NewsView(generics.ListCreateAPIView):
     filterset_class = NewsFilterSet
 
     def get_permissions(self):
-        permisson_classes = []
+        permission_classes = []
         if self.request.method != 'GET':
-            permisson_classes = [IsAuthor, IsAdmin]
-        return [permisson() for permisson in permisson_classes]
+            permission_classes = [IsAuthor | IsAdmin]
+        return [permission() for permission in permission_classes]
 
     # def get(self, request, *args, **kwargs):
     #     print(f"Authorization Header: {request.headers.get('Authorization')}")
