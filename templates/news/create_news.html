@@ -1,0 +1,45 @@
+{% extends 'news/base_news.html' %}
+{% load static %}
+
+{% block stylesheets %}
+    {{ block.super }}
+{% endblock %}
+
+{% block title %}
+    Create news
+{% endblock %}
+
+{% block content %}
+    <h1>Create News</h1>
+    <div style="border-radius: 5px; border: 2px black solid; padding: 10px">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <h2>News in Zones</h2>
+            {{ newsinzone_formset.management_form }}
+            {% for form in newsinzone_formset %}
+                {{ form.as_table }}
+            {% endfor %}
+
+            <h2>Tags</h2>
+            {{ tagnews_formset.management_form }}
+            {% for form in tagnews_formset %}
+                {{ form.as_table }}
+            {% endfor %}
+            <button type="submit" class="btn btn-success">
+                Create
+            </button>
+        </form>
+    </div>
+    <script>
+        // JavaScript to auto-generate slug from title
+        function slugify(text) {
+            return text.toString().toLowerCase()
+                .replace(/\s+/g, '-')           // Replace spaces with -
+                .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+                .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+                .replace(/^-+/, '')             // Trim - from start of text
+                .replace(/-+$/, '');            // Trim - from end of text
+        }
+    </script>
+{% endblock %}
