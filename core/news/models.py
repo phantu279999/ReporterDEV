@@ -59,6 +59,11 @@ class News(TimeStampedModel):
 	author = models.ForeignKey(Author, on_delete=models.CASCADE)
 	comments = GenericRelation(Comment)
 
+	# Meta SEO
+	meta_name = models.CharField(max_length=255, blank=True)
+	meta_keyword = models.CharField(max_length=255, blank=True)
+	meta_description = models.CharField(max_length=255, blank=True)
+
 	def __str__(self):
 		return self.title
 

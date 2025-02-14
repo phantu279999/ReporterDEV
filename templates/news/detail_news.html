@@ -1,6 +1,17 @@
 {% extends 'news/base_news.html' %}
 {% load static %}
 
+{% block seo %}
+    <meta name="keywords" content="{{ new.meta_keyword|default:new.title }}">
+    <meta name="description" content="{{ new.meta_description|default:new.sapo }}">
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="{{ new.meta_name|default:new.title }}"/>
+    <meta property="og:description" content="{{ new.meta_description|default:new.sapo }}"/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content="https://reportdev.com.vn{{ request.path }}"/>
+    <meta property="og:site_name" content="ReporterDEV"/>
+{% endblock %}
+
 {% block stylesheets %}
 {{ block.super }}
 {% endblock %}
