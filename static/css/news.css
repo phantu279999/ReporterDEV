@@ -30,3 +30,23 @@ a {
     margin: 7px 7px 0 0;
     padding: 5px;
 }
+
+.comments-news {
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: lavenderblush;
+
+}
+
+textarea {
+    width: 100%;
+    border: none;
+}
+
+.list-comments {
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: lavenderblush;
+}
