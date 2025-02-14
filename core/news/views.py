@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.core.paginator import Paginator
 
-from .models import News, Zone, NewsInZone, TagNews
+from .models import News, Zone, NewsInZone, TagNews, ReactNews
 from .forms import CommentForm, NewsForm, NewsInZoneFormSet, TagNewsFormSet
 
 
@@ -86,6 +86,21 @@ def lastest_news_view(request):
         'page_obj': page_obj
     }
     return render(request, 'news/lastest_news.html', context=ctx)
+
+@login_required
+def react_news_view(request, pk):
+    new = get_object_or_404(News, pk=pk)
+    react = request.POST.get('reaction', '')
+    if react not in {'like', 'dislike', 'heart', 'wow'}:
+        return redirect('news:detail_news', slug=new.slug)
+
+    existing_react = ReactNews.objects.filter(news_id=new.id, author=request.user).first()
+    if existing_react:
+        existing_react.react = react
+        existing_react.save()
+    else:
+        ReactNews.objects.create(news=new, react=react, author=request.user)
+    return redirect('news:detail_news', slug=new.slug)
 
 
 # # CRUD for author

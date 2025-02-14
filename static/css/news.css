@@ -50,3 +50,26 @@ textarea {
     border-radius: 10px;
     background-color: lavenderblush;
 }
+
+/* ============================ REACTION NEWS ==================================== */
+.react-form {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Khoảng cách giữa các phần tử */
+}
+
+.react-form label {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Khoảng cách giữa icon và chữ */
+    cursor: pointer;
+}
+
+.react-form input[type="radio"] {
+    display: none; /* Ẩn radio button */
+}
+
+.react-form label:hover {
+    opacity: 0.8;
+}
+/* ================================================================ */

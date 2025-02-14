@@ -10,5 +10,6 @@ urlpatterns = [
 	path('news-zone/<slug:url>/', views.news_in_zone, name='news_in_zone'),
 	path('news-tag/<slug:url>/', views.news_in_tag, name='news_in_tag'),
 	path("lastest-news/", views.lastest_news_view, name='lastest_news'),
+	path('react-news/<int:pk>/', views.react_news_view, name='react_news'),
 	# path('create-news/', views.create_news_view, name='create_news'),
 ]
