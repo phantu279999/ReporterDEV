@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import UniqueConstraint
 from django.contrib.contenttypes.fields import GenericRelation
+from django.db.models import F
 from ckeditor.fields import RichTextField
 
 from accounts.models import Author
@@ -46,6 +47,7 @@ class News(TimeStampedModel):
 	status = models.BooleanField(default=True)
 	slug = models.SlugField(unique=True, db_index=True)
 	content = RichTextField(blank=True)
+	view_count = models.IntegerField(default=0)
 
 	created_by = models.CharField(max_length=200, blank=True)
 	edited_by = models.CharField(max_length=200, blank=True)
@@ -65,6 +67,9 @@ class News(TimeStampedModel):
 
 	def reading_time(self):
 		return get_reading_time(self.word_count())
+
+	def increase_view_count(self):
+		News.objects.filter(id=self.id).update(view_count=F('view_count') + 1)
 
 	class Meta:
 		ordering = ('-created_date',)

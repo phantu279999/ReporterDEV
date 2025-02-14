@@ -7,16 +7,6 @@ from django.dispatch import receiver
 
 
 class CustomUserManager(BaseUserManager):
-	groups = models.ManyToManyField(
-		Group,
-		related_name="customuser_set",  # Add a unique related_name
-		blank=True,
-	)
-	user_permissions = models.ManyToManyField(
-		Permission,
-		related_name="customuser_set",  # Add a unique related_name
-		blank=True,
-	)
 	def create_user(self, email, password=None, **extra_fields):
 		if not email:
 			raise ValueError("The Email field must be set")
@@ -49,6 +39,9 @@ class CustomUser(AbstractUser):
 	user_type = models.CharField(_("Type"), max_length=10, choices=Types.choices, default=Types.READER)
 	email = models.EmailField(unique=True)
 	username = None
+
+	groups = models.ManyToManyField(Group, related_name="customuser_set", blank=True)
+	user_permissions = models.ManyToManyField(Permission, related_name="customuser_set", blank=True)
 
 	USERNAME_FIELD = 'email'
 	REQUIRED_FIELDS = ['user_type']

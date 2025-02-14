@@ -31,6 +31,7 @@ def news_in_zone(request, url):
 
 def detail_news_view(request, slug):
     new = get_object_or_404(News, slug=slug)
+    new.increase_view_count()
     tagnews = TagNews.objects.filter(news_id=new.id).select_related('tag')
     newsinzone = new.newsinzone_set.select_related('zone').prefetch_related('zone__newsinzone_set__news')
     news_in_zone = set(
