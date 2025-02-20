@@ -3,23 +3,31 @@ import json
 from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
 
-with open('secrets.json') as f:
-	secrets = json.load(f)
+
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+SECRETS_FILE = BASE_DIR / 'secrets.json'
+
+
+if not SECRETS_FILE.exists():
+    raise ImproperlyConfigured("secrets.json file is missing!")
+
+with open(SECRETS_FILE) as f:
+    secrets = json.load(f)
 
 
 def get_secret(setting, secrets=secrets):
-	'''Get the secret variable or return explicit exception.'''
-	try:
-		return secrets[setting]
-	except KeyError:
-		error_msg = 'Set the {0} environment,\n variable'.format(setting)
-		raise ImproperlyConfigured(error_msg)
+    '''Get the secret variable or return explicit exception.'''
+    try:
+        return secrets[setting]
+    except KeyError:
+        raise ImproperlyConfigured(f"Set the {setting} environment variable.")
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
 MEDIA_DIR = BASE_DIR / 'media'
 STATIC_DIR = BASE_DIR / 'static'
+
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = get_secret('SECRET_KEY')
@@ -46,6 +54,7 @@ INSTALLED_APPS = [
 	'django_filters',
 	'djoser',
 	'drf_yasg',
+	'django_celery_results',
 
 	# app
 	'core.apps.CoreConfig',
@@ -180,3 +189,6 @@ DJOSER = {
         'user': 'core.api.serializers.CustomDjoserUserSerializer',
     }
 }
+
+CELERY_RESULT_BACKEND = "django-db"
+CELERY_BROKER_URL = "redis://localhost:6379/0"

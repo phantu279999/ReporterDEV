@@ -4,7 +4,8 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models import F
 from ckeditor.fields import RichTextField
 
-from accounts.models import Author
+from .tasks import noti_email
+from accounts.models import Author, Follow
 from core.models import TimeStampedModel, Comment
 
 from common.common import count_word, get_reading_time
@@ -85,6 +86,15 @@ class News(TimeStampedModel):
 
 	class Meta:
 		ordering = ('-created_date',)
+
+	def save(self, *args, **kwargs):
+		super(News, self).save(*args, **kwargs)
+
+		followers = Follow.objects.filter(following=self.author).select_related('follower').all()
+		for f in followers:
+			# print("=============================")
+			# print(f.follower.email)
+			noti_email.delay(f.follower.email, self.author.email)
 
 
 class NewsInZone(models.Model):

@@ -42,3 +42,6 @@ DATABASES = {
 
 
 API_URL = 'http://localhost:8000/api/v1/'
+
+CELERY_RESULT_BACKEND = "django-db"
+CELERY_BROKER_URL = "redis://localhost:6379/0"
